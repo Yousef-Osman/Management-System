@@ -1,9 +1,11 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Tronica.DTOs;
 using Tronica.Models.Data;
 using Tronica.Repository;
 
@@ -24,6 +26,9 @@ namespace Tronica
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            services.AddAutoMapper(typeof(EmployeeDTO).Assembly);
 
             services.AddControllers();
             services.AddCors();
@@ -35,8 +40,6 @@ namespace Tronica
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

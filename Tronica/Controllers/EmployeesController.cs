@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Tronica.DTOs;
 using Tronica.Models.Domains;
 using Tronica.Repository;
 
@@ -13,21 +15,24 @@ namespace Tronica.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly IGenericRepository<Employee> _employeeRepository;
-        private readonly IGenericRepository<Department> _departmentRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMapper _mapper;
 
-        public EmployeesController(IGenericRepository<Employee> employeeRepository,
-                                   IGenericRepository<Department> departmentRepository)
+        public EmployeesController(IEmployeeRepository employeeRepository, IMapper mapper)
         {
             _employeeRepository = employeeRepository;
-            _departmentRepository = departmentRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetEmployees()
         {
-            var employees = await _employeeRepository.GetAllAsync();
-            return Ok(employees);
+            var employees = await _employeeRepository.GetEmployeeDataAsync();
+
+            //using auto mapper to include the depart name
+            var mappedEmployees = _mapper.Map<IEnumerable<EmployeeDTO>>(employees);
+
+            return Ok(mappedEmployees);
         }
 
         [HttpGet("{id}")]
