@@ -1,0 +1,41 @@
+<section class="container my-5">
+  <div class="card card-primary">
+    <div class="card-header">
+      <h5 class="card-title">New Employee</h5>
+    </div>
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <div class="card-body">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="InputName">Name</label>
+            <input type="text" formControlName="name" required class="form-control" id="InputName" placeholder="Enter your name">
+            <p *ngIf="employeeForm.get('name').touched && employeeForm.get('name').invalid" class="text-danger">*Name is Required</p>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="InputEmail1">Email Address</label>
+            <input type="email" formControlName="email" required class="form-control" id="InputEmail1" placeholder="Enter your email">
+            <p *ngIf="employeeForm.get('email').touched && employeeForm.get('email').invalid" class="text-danger">*Email is Required</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="InputAge">Age</label>
+            <input type="number" formControlName="age" class="form-control" id="InputAge" placeholder="Enter your age">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="InputDepartment">Department</label>
+            <select class="form-control" formControlName="departmentId" required id="InputDepartment">
+              <option *ngFor="let department of departments"
+              [value]="department.id" >{{department.name}}</option>
+            </select>
+            <p *ngIf="employeeForm.get('departmentId').touched && employeeForm.get('departmentId').invalid" class="text-danger">*Department is Required</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="!employeeForm.valid">Submit</button>
+      </div>
+    </form>
+  </div>
+</section>

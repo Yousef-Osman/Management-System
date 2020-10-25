@@ -1,1 +1,27 @@
-<p>employees works!</p>
+<section class="container my-5">
+  <h5 class="mb-2">Employees List</h5>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">Email</th>
+        <th scope="col">Department</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees">
+        <td>{{employee.name}}</td>
+        <td>{{employee?.age}}</td>
+        <td>{{employee.email}}</td>
+        <td>{{employee.departmentName}}</td>
+        <td>
+          <a class="btn"><i class="fa fa-edit text-warning" [routerLink]="['/employees/edit', employee.id]"></i></a>
+          <a class="btn"><i class="fa fa-trash text-danger" (click)="openModal(employee.id)"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="button" class="btn btn-success" value="Add Employee" [routerLink]="['/employees/new']">
+</section>
