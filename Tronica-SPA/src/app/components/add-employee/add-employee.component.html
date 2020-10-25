@@ -1,19 +1,19 @@
 <section class="container my-5">
   <div class="card card-primary">
-    <div class="card-header">
-      <h5 class="card-title">New Employee</h5>
+    <div class="card-header bg-primary">
+      <h5 class="card-title pt-1 text-white">New Employee</h5>
     </div>
     <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
       <div class="card-body">
         <div class="row">
           <div class="form-group col-md-6">
             <label for="InputName">Name</label>
-            <input type="text" formControlName="name" required class="form-control" id="InputName" placeholder="Enter your name">
+            <input type="text" formControlName="name" class="form-control" id="InputName" placeholder="Enter your name">
             <p *ngIf="employeeForm.get('name').touched && employeeForm.get('name').invalid" class="text-danger">*Name is Required</p>
           </div>
           <div class="form-group col-md-6">
             <label for="InputEmail1">Email Address</label>
-            <input type="email" formControlName="email" required class="form-control" id="InputEmail1" placeholder="Enter your email">
+            <input type="email" formControlName="email" class="form-control" id="InputEmail1" placeholder="Enter your email">
             <p *ngIf="employeeForm.get('email').touched && employeeForm.get('email').invalid" class="text-danger">*Email is Required</p>
           </div>
         </div>
@@ -22,10 +22,11 @@
           <div class="form-group col-md-6">
             <label for="InputAge">Age</label>
             <input type="number" formControlName="age" class="form-control" id="InputAge" placeholder="Enter your age">
+            <p *ngIf="employeeForm.get('age').touched && employeeForm.get('age').invalid" class="text-danger">*Age is Required</p>
           </div>
           <div class="form-group col-md-6">
             <label for="InputDepartment">Department</label>
-            <select class="form-control" formControlName="departmentId" required id="InputDepartment">
+            <select class="form-control" formControlName="departmentId" id="InputDepartment">
               <option *ngFor="let department of departments"
               [value]="department.id" >{{department.name}}</option>
             </select>

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Department } from 'src/app/interfaces/department';
 import { Employee } from 'src/app/interfaces/employee';
 import { DepartmentsService } from 'src/app/services/departments.service';
@@ -20,7 +21,8 @@ export class EditEmployeeComponent implements OnInit {
               private employeesService: EmployeesService,
               private departmentsService: DepartmentsService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private toasterService: ToastrService) { }
 
   ngOnInit(): void {
     this.route.data.subscribe(data=> {
@@ -29,7 +31,7 @@ export class EditEmployeeComponent implements OnInit {
         id: [emp.id],
         name: [emp.name, [Validators.required]],
         email: [emp.email, [Validators.required, Validators.email]],
-        age: [emp.age],
+        age: [emp.age, [Validators.required]],
         departmentId: [emp.departmentId, [Validators.required]]
       });
     });
@@ -49,8 +51,9 @@ export class EditEmployeeComponent implements OnInit {
     formData.departmentId = +formData.departmentId;
     this.employeesService.editEmployee(formData).subscribe(() => {
       this.router.navigate(['/employees']);
+      this.toasterService.success("successfully Modified");
     }, error => {
-      console.log(error);
+      this.toasterService.error("failed to Modify");
     })
   }
 }

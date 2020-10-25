@@ -1,17 +1,23 @@
+//modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { BsModalRef, BsModalService, ModalModule } from 'ngx-bootstrap/modal';
-
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BsModalRef, BsModalService, ModalModule } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { EmployeesComponent } from './components/employees/employees.component';
 import { AddEmployeeComponent } from './components/add-employee/add-employee.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
 import { EditEmployeeComponent } from './components/edit-employee/edit-employee.component';
+
+//resolvers
 import { EditEmployeeResolver } from './resolvers/edit-employee.resolver';
 
 @NgModule({
@@ -30,9 +36,13 @@ import { EditEmployeeResolver } from './resolvers/edit-employee.resolver';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ModalModule.forRoot()
+    BrowserAnimationsModule,
+    ModalModule.forRoot(),
+    ToastrModule.forRoot()
   ],
-  entryComponents:[DeleteModalComponent],
+  entryComponents:[
+    DeleteModalComponent
+  ],
   providers: [
     BsModalService,
     BsModalRef,

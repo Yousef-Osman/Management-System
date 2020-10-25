@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Department } from 'src/app/interfaces/department';
 import { DepartmentsService } from 'src/app/services/departments.service';
 import { EmployeesService } from 'src/app/services/employees.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-employee',
@@ -17,11 +18,12 @@ export class AddEmployeeComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private employeesService: EmployeesService,
               private departmentsService: DepartmentsService,
-              private router: Router) {
+              private router: Router,
+              private toasterService: ToastrService) {
     this.employeeForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      age: [''],
+      age: ['', [Validators.required]],
       departmentId: ['', [Validators.required]]
     });
   }
@@ -41,8 +43,9 @@ export class AddEmployeeComponent implements OnInit {
     formData.departmentId = +formData.departmentId;
     this.employeesService.addEmployee(formData).subscribe(()=>{
       this.router.navigate(['/employees']);
+      this.toasterService.success("successfully added");
     },error => {
-      console.log(error);
+      this.toasterService.error("failed to add");
     })
   }
 }
